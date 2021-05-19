@@ -1,6 +1,7 @@
 package com.taskfoundation.braintrainer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Button button2;
     Button button3;
     Button playAgainButton;
+    ConstraintLayout bodyLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +50,18 @@ public class MainActivity extends AppCompatActivity {
         scoreTextView = findViewById(R.id.scoreTextView);
         timerTextView = findViewById(R.id.timerTextView);
         playAgainButton = findViewById(R.id.playAgainButton);
+        bodyLayout = findViewById(R.id.bodyLayout);
 
         goButton = findViewById(R.id.goButton);
 
-        playAgain(playAgainButton);
+        goButton.setVisibility(View.VISIBLE);
+
     }
 
     public void start(View view) {
         goButton.setVisibility(View.INVISIBLE);
+        bodyLayout.setVisibility(View.VISIBLE);
+        playAgain(playAgainButton);
     }
 
     public void chooseAnswer(View view) {
