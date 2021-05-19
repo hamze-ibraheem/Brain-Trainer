@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         timerTextView.setText("30s");
         scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestions));
         playAgainButton.setVisibility(View.INVISIBLE);
+        resultTextView.setText("");
         newQuestion();
 
         new CountDownTimer(30100, 1000) {
