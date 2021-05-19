@@ -3,6 +3,7 @@ package com.taskfoundation.braintrainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView scoreTextView;
     TextView sumTextView;
+    TextView timerTextView;
     Button button0;
     Button button1;
     Button button2;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.button3);
         resultTextView = findViewById(R.id.resultTextView);
         scoreTextView = findViewById(R.id.scoreTextView);
+        timerTextView = findViewById(R.id.timerTextView);
 
         goButton = findViewById(R.id.goButton);
 
@@ -53,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
         goButton.setVisibility(View.INVISIBLE);
     }
 
-    public void chooseAnswer(View view){
-        Log.i("TAG:",view.getTag().toString());
-        if (Integer.toString(locationOfCorrectAnswer).equals(view.getTag().toString())){
-            Log.i("Correct!","You got it!");
+    public void chooseAnswer(View view) {
+        Log.i("TAG:", view.getTag().toString());
+        if (Integer.toString(locationOfCorrectAnswer).equals(view.getTag().toString())) {
+            Log.i("Correct!", "You got it!");
             resultTextView.setText("Correct!");
             score++;
-        }else{
-            Log.i("Wrong!",":/");
+        } else {
+            Log.i("Wrong!", ":/");
             resultTextView.setText("Wrong :(");
         }
         numberOfQuestions++;
@@ -68,9 +71,22 @@ public class MainActivity extends AppCompatActivity {
         scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestions));
 
         newQuestion();
+
+        new CountDownTimer(30100, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000) + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                resultTextView.setText("Done!");
+            }
+        }.start();
     }
 
-    public void newQuestion(){
+    public void newQuestion() {
         Random random = new Random();
 
         int a = random.nextInt(21);
