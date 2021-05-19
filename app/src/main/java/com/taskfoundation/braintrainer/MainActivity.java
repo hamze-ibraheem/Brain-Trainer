@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Button button1;
     Button button2;
     Button button3;
+    Button playAgainButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
         resultTextView = findViewById(R.id.resultTextView);
         scoreTextView = findViewById(R.id.scoreTextView);
         timerTextView = findViewById(R.id.timerTextView);
+        playAgainButton = findViewById(R.id.playAgainButton);
 
         goButton = findViewById(R.id.goButton);
 
-        newQuestion();
+        playAgain(playAgainButton);
     }
 
     public void start(View view) {
@@ -71,19 +73,6 @@ public class MainActivity extends AppCompatActivity {
         scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestions));
 
         newQuestion();
-
-        new CountDownTimer(30100, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerTextView.setText(String.valueOf(millisUntilFinished / 1000) + "s");
-            }
-
-            @Override
-            public void onFinish() {
-                resultTextView.setText("Done!");
-            }
-        }.start();
     }
 
     public void newQuestion() {
@@ -116,5 +105,28 @@ public class MainActivity extends AppCompatActivity {
         button1.setText(Integer.toString(answers.get(1)));
         button2.setText(Integer.toString(answers.get(2)));
         button3.setText(Integer.toString(answers.get(3)));
+    }
+
+    public void playAgain(View view) {
+        score = 0;
+        numberOfQuestions = 0;
+        timerTextView.setText("30s");
+        scoreTextView.setText(Integer.toString(score) + "/" + Integer.toString(numberOfQuestions));
+        playAgainButton.setVisibility(View.INVISIBLE);
+        newQuestion();
+
+        new CountDownTimer(30100, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000) + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                resultTextView.setText("Done!");
+                playAgainButton.setVisibility(View.VISIBLE);
+            }
+        }.start();
     }
 }
